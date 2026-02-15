@@ -99,8 +99,7 @@ This temple, inspired by the famed *Srirangam Ranganathaswamy Temple*, is set ne
 **🕰️ Period:** 15th century
 
 **Description:**  
-This temple, 
-
+The Sri Ranganatha Swamy and Sri Venkateswara Swamy Temple stands as a magnificent 15th-century testament to indian architecture, featuring intricately carved granite pillars and towering Gopurams. This sacred dual-shrine complex harmoniously honors both the reclining form of Lord Vishnu and the standing deity of Tirumala, serving as a historic spiritual hub for devotees across centuries.
 
 
 ---
