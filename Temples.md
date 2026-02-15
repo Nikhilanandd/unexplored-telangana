@@ -91,6 +91,18 @@ The *Nagunur Fort* precinct preserves remnants of once-numerous temples, includi
 **Description:**  
 This temple, inspired by the famed *Srirangam Ranganathaswamy Temple*, is set near the scenic Pushkarini Lake. Its architecture blends regional motifs with classic Vijayanagara temple aesthetics. 
 
+## 7. **Sri Venkateswara Swamy & Ranganatha Swamy Temple (Yamnampet)**
+
+
+**📍 Location:** Ghatkesar, Medchal District, Telangana
+**🛕 Deity:** Ranganayaka (Vishnu form)  
+**🕰️ Period:** 15th century
+
+**Description:**  
+This temple, 
+
+
+
 ---
 
 <!-- → Continue additional temple entries similarly → -->
