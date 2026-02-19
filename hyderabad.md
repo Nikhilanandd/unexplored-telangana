@@ -56,3 +56,55 @@ While Hyderabad is famous for the Charminar and Golconda Fort, many of its most 
 - **Location:** Malakpet/Asmangadh.
 - **Historical Background:** Adjacent to Raymond's Tomb, this black granite obelisk stands 7 meters high.
 - **Architectural Features:** Minimalist French memorial style, inscribed with the initials "J.R." (Joachim Raymond).
+
+---
+
+## 11. The Financial District (Gachibowli)
+- **Location:** Nanakramguda.
+- **Features:** Representing the "New Hyderabad," this area features glass skyscrapers, corporate headquarters, and high-tech infrastructure.
+- **Why visit:** For its modern skyline, night views, and the "Waverock" building which is an architectural landmark.
+
+## 12. T-Hub 2.0 (Phase II)
+- **Location:** Knowledge City, Rai Durg.
+- **Features:** The world's largest startup incubator. The building itself is an architectural marvel designed to look like a spaceship or a futuristic craft.
+- **Significance:** Represents the city's status as a global technology and innovation hub.
+
+## 13. Khajaguda Hills (Natural Formations)
+- **Location:** Near Lanco Hills, Manikonda.
+- **Geographical Features:** Ancient basalt rock formations and caves dating back millions of years.
+- **Why it's unexplored:** Despite being near the IT corridor, it remains a quiet spot for boulderers, hikers, and sunset chasers.
+
+## 14. British Residency (Koti Women's College)
+- **Location:** Koti.
+- **Historical Background:** Built in 1803, it served as the embassy for the British East India Company. It was the setting for William Dalrymple’s "White Mughals."
+- **Architectural Features:** Palladian style architecture with massive Corinthian pillars. The restoration has recently brought back its former glory.
+
+## 15. Telangana State Central Library
+- **Location:** Afzal Gunj.
+- **Historical Background:** Built in 1891, it is one of the grandest libraries in India.
+- **Architectural Features:** Constructed in the Indo-Saracenic style with high ceilings and massive halls. It houses over 500,000 books including rare palm-leaf manuscripts.
+
+## 16. Osman Sagar (Gandipet)
+- **Location:** Gandipet.
+- **Historical Background:** A reservoir created by damming the Musi River in 1920 to provide water to the city after the great flood of 1908.
+- **Significance:** A scenic spot that offers a peaceful escape with a heritage guest house (Sagar Mahal) overlooking the lake.
+
+## 17. Telangana State Archaeology Museum
+- **Location:** Public Gardens, Nampally.
+- **Features:** One of the oldest museums in the state. It houses a rare Egyptian Mummy (one of the few in India), Buddhist gallery, and ancient sculptures from the Satavahana era.
+- **Architecture:** An elegant building with classic arches and white-washed walls.
+
+## 18. University of Hyderabad (HCU Campus)
+- **Location:** Gachibowli.
+- **Geographical Features:** Spanning 2,300 acres, it is a biodiversity hotspot. It contains several lakes like Peacock Lake and unique rock formations.
+- **Why visit:** For its immense greenery and quiet nature trails within the heart of the city.
+
+## 19. Durgam Cheruvu Cable Bridge
+- **Location:** Madhapur/Jubilee Hills.
+- **Features:** An extradosed cable-stayed bridge. While popular, the lower deck trails and the rock formations surrounding the "Secret Lake" (Durgam Cheruvu) are often missed by casual commuters.
+- **Significance:** A testament to modern engineering integrated with the city's rocky landscape.
+
+## 20. Public Gardens (Bagh-e-Aam)
+- **Location:** Nampally.
+- **Historical Background:** Built in 1846 by the Nizams, it is the city's oldest park.
+- **Features:** It houses the State Assembly building, Jubilee Hall, and the Museum. It represents the planned urban lung spaces of old Hyderabad.
