@@ -63,3 +63,62 @@ Warangal, the capital of the Kakatiya dynasty, is a city where history is carved
 - **Historical Background:** The tomb of a 19th-century Sufi saint who preached communal harmony.
 - **Cultural Importance:** A symbol of the syncretic culture of the region, visited by people of all faiths.
 - **Architectural Features:** A serene structure with a traditional dome and white-washed walls, surrounded by old trees.
+
+## 11. Pakhal Lake & Wildlife Sanctuary
+- **Location:** Narsampet (approx. 50km from Warangal).
+- **Historical Background:** A man-made lake constructed by Kakatiya King Ganapati Deva in 1213 AD.
+- **Geographical Features:** Surrounded by a lush wildlife sanctuary, it is home to tigers, leopards, and various bird species.
+- **Why visit:** For its serene atmosphere, pristine waters, and the chance to spot wildlife in its natural habitat.
+
+## 12. Eturnagaram Wildlife Sanctuary
+- **Location:** Eturnagaram (approx. 110km from Warangal).
+- **Historical Background:** One of the oldest sanctuaries in Telangana, established by the Nizam government in 1952.
+- **Natural Features:** Dense forest with Godavari river flowing through it, featuring a variety of biodiversity like the giant squirrel.
+- **Significance:** A primary conservation area for the region's flora and fauna.
+
+## 13. Bogatha Waterfalls
+- **Location:** Mulugu district (approx. 120km from Warangal).
+- **Geographical Features:** Often called the "Niagara of Telangana," it is a stunning waterfall with a clean, deep pool at the bottom.
+- **Best time to visit:** Monsoon and post-monsoon seasons for the best volume of water.
+- **Why it's unexplored:** Its distance from the main city keeps it relatively quiet, making it a perfect spot for nature lovers.
+
+## 14. Ghanpur Group of Temples (Kota Gullu)
+- **Location:** Ghanpur (approx. 60km from Warangal).
+- **Architectural Features:** Built by King Ganapati Deva, these temples were once comparable to the Ramappa Temple but are mostly in ruins now.
+- **Artistic Value:** Features exquisite carvings and a massive fort structure nearby.
+- **Significance:** Important for those interested in the archaeological and historical transition of Kakatiya art.
+
+## 15. Sammakka Sarakka Gadde (Medaram)
+- **Location:** Medaram (approx. 100km from Warangal).
+- **Historical Significance:** Commemorates the battle of a tribal mother and daughter against the Kakatiya kings over unjust taxes.
+- **Cultural Importance:** Site of the biennial Sammakka Saralamma Jatara, the largest tribal festival in the world.
+- **Why visit:** For its deep-rooted tribal history and spiritual aura, even during off-peak seasons.
+
+## 16. Ainavolu Mallikarjuna Swamy Temple
+- **Location:** Ainavolu (approx. 15km from Warangal).
+- **Historical Background:** An 11th-century temple built during the reign of the Kakatiya kings.
+- **Architectural Features:** Famous for its tall and beautifully carved gopuram and the large Nandi statue.
+- **Cultural Importance:** Significantly associated with the Oggu Katha tradition and the pastoralist communities of the region.
+
+## 17. Mettu Gutta
+- **Location:** Madikonda, Hanamkonda.
+- **Historical Background:** A hilltop Shiva temple with historical links leading back to ancient times.
+- **Geographical Features:** A rocky hill with around 500 steps leading up to the temple.
+- **Why visit:** For the spiritual silence and the panoramic sunset view over the Hanamkonda-Warangal corridor.
+
+## 18. Pandavula Gutta (Prehistoric Rock Art)
+- **Location:** Regonda (approx. 50km from Warangal).
+- **Historical Background:** A site containing prehistoric rock paintings and carvings dating back to the Mesolithic and Neolithic periods.
+- **Significance:** One of the most important rock art sites in India, depicting animals, humans, and symbols.
+- **Why it's unexplored:** Lacks commercial infrastructure, but is a goldmine for archaeology enthusiasts.
+
+## 19. Dharmasagar Reservoir & Hilltop Temple
+- **Location:** Dharmasagar (approx. 20km from Warangal).
+- **Geographical Features:** A massive reservoir that becomes a large lake during the rainy season.
+- **Why visit:** Provides a scenic getaway with its surrounding hillocks, ideal for quiet picnics and birdwatching.
+
+## 20. Mallur (Hemachala Narasimha Swamy Temple)
+- **Location:** Mangapet mandal (approx. 120km from Warangal).
+- **Historical Background:** An ancient temple located in the heart of a dense forest.
+- **Unique Features:** The idol of Lord Narasimha is believed to have a "human skin" texture that feels soft to the touch.
+- **Natural Wonder:** A continuous stream of water flows from above the temple throughout the year, regardless of the season.
