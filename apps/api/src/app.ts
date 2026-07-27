@@ -8,12 +8,7 @@ import { locationRoutes } from './routes/locations'
 
 export async function createServer() {
   const app = Fastify({
-    logger: {
-      transport: {
-        target: 'pino-pretty',
-        options: { colorize: true },
-      },
-    },
+    logger: true,
   })
 
   await app.register(cors, {

@@ -37,7 +37,10 @@ export default function Landing() {
 
   return (
     <div className="relative h-[calc(100vh-4rem)] w-full overflow-hidden">
-      <Map className="absolute inset-0" />
+      <Map
+        className="absolute inset-0"
+        onMarkerClick={slug => navigate({ to: '/locations/$slug', params: { slug } })}
+      />
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 top-0 z-10">
         <div className="mx-auto flex h-full max-w-6xl flex-col justify-center px-6 pb-32">

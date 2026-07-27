@@ -1,12 +1,9 @@
 import createError from '@fastify/error'
+import { DISTRICTS, LOCATIONS } from '@ut/config'
 import type { Category } from '@ut/types'
 import type { FastifyInstance } from 'fastify'
 
-const LocationNotFoundError = createError(
-  'LOCATION_NOT_FOUND',
-  'Location "%s" not yet in content pipeline',
-  404
-)
+const LocationNotFoundError = createError('LOCATION_NOT_FOUND', 'Location "%s" not found', 404)
 
 const categories: Category[] = [
   'waterfalls',
@@ -46,13 +43,27 @@ export async function locationRoutes(app: FastifyInstance) {
         limit?: number
         offset?: number
       }
+      let filtered = [...LOCATIONS]
+
+      if (query.district) {
+        filtered = filtered.filter(l => l.district === query.district)
+      }
+      if (query.category) {
+        filtered = filtered.filter(l => l.category === query.category)
+      }
+
+      const total = filtered.length
+      const offset = query.offset ?? 0
+      const limit = query.limit ?? 50
+      const paged = filtered.slice(offset, offset + limit)
+
       return {
-        locations: [],
-        total: 0,
+        locations: paged,
+        total,
         district: query.district ?? null,
         category: query.category ?? null,
-        limit: query.limit ?? 50,
-        offset: query.offset ?? 0,
+        limit,
+        offset,
       }
     },
   })
@@ -69,7 +80,12 @@ export async function locationRoutes(app: FastifyInstance) {
     },
     handler: async request => {
       const { slug } = request.params as { slug: string }
-      throw new LocationNotFoundError(slug)
+      const location = LOCATIONS.find(l => l.slug === slug)
+      if (!location) {
+        throw new LocationNotFoundError(slug)
+      }
+      const district = DISTRICTS.find(d => d.slug === location.district)
+      return { ...location, districtName: district?.name ?? location.district }
     },
   })
 }

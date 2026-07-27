@@ -1,3 +1,5 @@
+export { LOCATIONS, type LocationData } from './locations'
+
 export const APP = {
   name: 'Unexplored Telangana',
   description:
@@ -11,6 +13,7 @@ export const MAP = {
   defaultZoom: 7,
   minZoom: 6,
   maxZoom: 18,
+  maxBounds: [76.5, 15.5, 82.0, 20.5] as [number, number, number, number],
   pitch: 0,
   bearing: 0,
   clusterRadius: 50,

@@ -1,29 +1,57 @@
 import { useNavigate, useParams } from '@tanstack/react-router'
-import { DISTRICTS } from '@ut/config'
+import { DISTRICTS, LOCATIONS } from '@ut/config'
+import { CATEGORIES } from '@ut/types'
+import type { Category } from '@ut/types'
 import { Badge, Button, Card } from '@ut/ui'
 import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
   Clock,
-  Layers,
+  ExternalLink,
   MapPin,
   Navigation,
   Sparkles,
 } from 'lucide-react'
 import { motion } from 'motion/react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Map } from '../components/Map'
 import { useStore } from '../store'
+
+const CATEGORY_EMOJI: Record<string, string> = {
+  waterfalls: '💧',
+  forts: '🏰',
+  temples: '🛕',
+  lakes: '🌊',
+  reservoirs: '🏗',
+  archaeological: '🏛',
+  'eco-tourism': '🌿',
+  food: '🍛',
+  viewpoints: '🏔',
+  wildlife: '🐾',
+  camping: '⛺',
+  museums: '🏛',
+  'hidden-gems': '💎',
+}
 
 export default function DistrictExplorer() {
   const { slug } = useParams({ from: '/districts/$slug' })
   const navigate = useNavigate()
   const setActiveDistrict = useStore(s => s.setActiveDistrict)
   const [activeTab, setActiveTab] = useState<'info' | 'locations'>('info')
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
 
   const district = DISTRICTS.find(d => d.slug === slug)
   const districtIndex = DISTRICTS.findIndex(d => d.slug === slug)
+
+  const districtLocations = useMemo(
+    () =>
+      LOCATIONS.filter(l => {
+        if (slug === 'all') return !selectedCategory || l.category === selectedCategory
+        return l.district === slug && (!selectedCategory || l.category === selectedCategory)
+      }),
+    [slug, selectedCategory]
+  )
 
   const prevDistrict = districtIndex > 0 ? DISTRICTS[districtIndex - 1] : null
   const nextDistrict = districtIndex < DISTRICTS.length - 1 ? DISTRICTS[districtIndex + 1] : null
@@ -41,9 +69,11 @@ export default function DistrictExplorer() {
     )
   }
 
-  const handleBack = () => {
-    setActiveDistrict(null)
-    navigate({ to: '/' })
+  const handleOpenMaps = (_title: string, lat: number, lng: number) => {
+    window.open(
+      `https://www.openstreetmap.org/directions?to=${lat}%2C${lng}#map=14/${lat}/${lng}`,
+      '_blank'
+    )
   }
 
   return (
@@ -60,7 +90,10 @@ export default function DistrictExplorer() {
         <div className="relative flex-1 overflow-y-auto px-6 py-8">
           <div className="mb-8 flex items-center justify-between">
             <button
-              onClick={handleBack}
+              onClick={() => {
+                setActiveDistrict(null)
+                navigate({ to: '/' })
+              }}
               className="flex items-center gap-2 text-sm text-sand-400 transition-colors hover:text-sand-200"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -71,10 +104,7 @@ export default function DistrictExplorer() {
               {prevDistrict && (
                 <button
                   onClick={() =>
-                    navigate({
-                      to: '/districts/$slug',
-                      params: { slug: prevDistrict.slug },
-                    })
+                    navigate({ to: '/districts/$slug', params: { slug: prevDistrict.slug } })
                   }
                   className="rounded-lg p-1.5 text-sand-500 transition-colors hover:bg-obsidian-800 hover:text-sand-300"
                 >
@@ -84,10 +114,7 @@ export default function DistrictExplorer() {
               {nextDistrict && (
                 <button
                   onClick={() =>
-                    navigate({
-                      to: '/districts/$slug',
-                      params: { slug: nextDistrict.slug },
-                    })
+                    navigate({ to: '/districts/$slug', params: { slug: nextDistrict.slug } })
                   }
                   className="rounded-lg p-1.5 text-sand-500 transition-colors hover:bg-obsidian-800 hover:text-sand-300"
                 >
@@ -113,12 +140,12 @@ export default function DistrictExplorer() {
               key={slug}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-serif text-4xl font-bold leading-tight text-sand-100"
+              className="font-serif text-3xl font-bold leading-tight text-sand-100"
             >
               {district.name}
             </motion.h1>
 
-            <p className="mt-4 text-base leading-relaxed text-sand-400">{district.description}</p>
+            <p className="mt-3 text-sm leading-relaxed text-sand-400">{district.description}</p>
           </div>
 
           <div className="mb-6 flex gap-1 rounded-xl bg-obsidian-800 p-1">
@@ -132,7 +159,7 @@ export default function DistrictExplorer() {
                     : 'text-sand-500 hover:text-sand-300'
                 }`}
               >
-                {tab === 'info' ? 'Overview' : 'Locations'}
+                {tab === 'info' ? 'Overview' : `Places (${districtLocations.length})`}
               </button>
             ))}
           </div>
@@ -143,10 +170,10 @@ export default function DistrictExplorer() {
                 <Card className="p-4">
                   <div className="flex items-center gap-2 text-sand-400">
                     <MapPin className="h-4 w-4" />
-                    <p className="text-xs font-medium uppercase tracking-wide">Locations</p>
+                    <p className="text-xs font-medium uppercase tracking-wide">Places</p>
                   </div>
                   <p className="mt-2 font-serif text-2xl font-semibold text-sand-100">
-                    {district.locationCount}
+                    {districtLocations.length}
                   </p>
                 </Card>
                 <Card className="p-4">
@@ -170,19 +197,96 @@ export default function DistrictExplorer() {
                   ))}
                 </div>
               </div>
+
+              <Button
+                variant="primary"
+                className="w-full"
+                onClick={() => setActiveTab('locations')}
+              >
+                <MapPin className="h-4 w-4" />
+                Browse {districtLocations.length} Places
+              </Button>
             </motion.div>
           )}
 
           {activeTab === 'locations' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-              <div className="rounded-xl border border-obsidian-700 bg-obsidian-800/30 p-6 text-center">
-                <Layers className="mx-auto mb-3 h-8 w-8 text-sand-600" />
-                <p className="text-sm text-sand-400">
-                  Location data is loaded from the content pipeline.
-                  <br />
-                  Explore on the map or browse by category.
-                </p>
+              <div className="flex flex-wrap gap-1.5 pb-2">
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className={`rounded-full px-3 py-1 text-xs transition-all ${
+                    !selectedCategory
+                      ? 'bg-saffron-500/20 text-saffron-400 border border-saffron-500/40'
+                      : 'text-sand-400 border border-obsidian-600 hover:border-sand-600'
+                  }`}
+                >
+                  All
+                </button>
+                {CATEGORIES.filter(c => districtLocations.some(l => l.category === c.id)).map(c => (
+                  <button
+                    key={c.id}
+                    onClick={() => setSelectedCategory(c.id)}
+                    className={`rounded-full px-3 py-1 text-xs transition-all ${
+                      selectedCategory === c.id
+                        ? 'bg-saffron-500/20 text-saffron-400 border border-saffron-500/40'
+                        : 'text-sand-400 border border-obsidian-600 hover:border-sand-600'
+                    }`}
+                  >
+                    {c.label}
+                  </button>
+                ))}
               </div>
+
+              {districtLocations.length === 0 ? (
+                <div className="rounded-xl border border-obsidian-700 bg-obsidian-800/30 p-8 text-center">
+                  <MapPin className="mx-auto mb-3 h-8 w-8 text-sand-600" />
+                  <p className="text-sm text-sand-400">No locations found for this filter.</p>
+                </div>
+              ) : (
+                districtLocations.map((loc, i) => (
+                  <motion.div
+                    key={loc.slug}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.04 }}
+                  >
+                    <Card
+                      className="cursor-pointer transition-all hover:border-saffron-500/30 hover:bg-obsidian-800/80"
+                      onClick={() =>
+                        navigate({ to: '/locations/$slug', params: { slug: loc.slug } })
+                      }
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-obsidian-700 text-lg">
+                          {CATEGORY_EMOJI[loc.category] ?? '📍'}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-serif text-base font-semibold text-sand-100 truncate">
+                            {loc.title}
+                          </h4>
+                          <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-sand-400">
+                            {loc.description}
+                          </p>
+                          <div className="mt-3 flex flex-wrap items-center gap-2">
+                            <Badge variant="saffron">{loc.category.replace(/-/g, ' ')}</Badge>
+                            <span className="text-[10px] text-sand-500">{loc.bestSeason}</span>
+                            <button
+                              onClick={e => {
+                                e.stopPropagation()
+                                handleOpenMaps(loc.title, loc.coordinates.lat, loc.coordinates.lng)
+                              }}
+                              className="ml-auto flex items-center gap-1 rounded-md px-2 py-1 text-[10px] text-saffron-400 transition-colors hover:bg-saffron-500/10"
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                              Directions
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))
+              )}
             </motion.div>
           )}
         </div>
@@ -190,12 +294,12 @@ export default function DistrictExplorer() {
         <div className="relative border-t border-obsidian-800 bg-obsidian-900/50 px-6 py-4">
           <div className="flex items-center gap-3">
             <Clock className="h-4 w-4 text-saffron-500" />
-            <p className="text-xs text-sand-500">Best time to visit: October – March</p>
+            <p className="text-xs text-sand-500">Best time: October – March</p>
           </div>
           <div className="mt-2 flex items-center gap-3">
             <Navigation className="h-4 w-4 text-saffron-500" />
             <p className="text-xs text-sand-500">
-              Coordinates: {district.center.lat.toFixed(3)}, {district.center.lng.toFixed(3)}
+              {district.center.lat.toFixed(3)}, {district.center.lng.toFixed(3)}
             </p>
           </div>
         </div>
@@ -204,7 +308,9 @@ export default function DistrictExplorer() {
       <div className="relative flex-1">
         <Map
           className="absolute inset-0"
-          onDistrictClick={slug => navigate({ to: '/districts/$slug', params: { slug } })}
+          activeDistrict={slug !== 'all' ? slug : null}
+          activeCategory={selectedCategory}
+          onMarkerClick={locSlug => navigate({ to: '/locations/$slug', params: { slug: locSlug } })}
         />
       </div>
     </div>

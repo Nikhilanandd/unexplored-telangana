@@ -63,6 +63,9 @@
     "packages/config": {
       "name": "@ut/config",
       "version": "0.0.1",
+      "dependencies": {
+        "@ut/types": "workspace:*",
+      },
     },
     "packages/types": {
       "name": "@ut/types",
