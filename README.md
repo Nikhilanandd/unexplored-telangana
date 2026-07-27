@@ -1,139 +1,97 @@
 # Unexplored Telangana
 
-Unexplored Telangana is a documentation-driven repository dedicated to discovering, documenting, and preserving lesser-known historical, cultural, natural, and spiritual places across Telangana.
+> A digital atlas of Telangana — its districts, heritage, ecology, and untold stories. Built for explorers, by explorers.
 
-This project aims to systematically record places that are historically significant, culturally meaningful, architecturally unique, or geographically interesting — but are not widely documented or promoted.
-
----
-
-## Vision
-
-To build an open, structured, and research-oriented documentation archive of Telangana’s unexplored heritage and destinations.
-
-The long-term goal is to create a reliable knowledge base that can serve:
-
-- Researchers
-- Students
-- Travelers
-- Historians
-- Cultural enthusiasts
-- Local communities
+Unexplored Telangana is an open-source platform documenting every district of Telangana through interactive maps, rich storytelling, and structured geographic data. It encourages people to explore their own state before traveling elsewhere.
 
 ---
 
-## What This Repository Will Cover
+## Quick Start
 
-This repository will gradually expand to include:
+```bash
+bun install
+bun run dev
+```
 
-### 1. Temples
-- Ancient and lesser-known temples
-- Architectural analysis
-- Historical background
-- Dynastic influence
-- Geographic location details
-- Travel information
-
-(Currently started with: `temples.md`)
-
-### 2. Historical Monuments
-- Forts
-- Stepwells
-- Ruins
-- Ancient settlements
-- Archaeological sites
-
-### 3. Natural Locations
-- Waterfalls
-- Hills
-- Forest regions
-- Rivers and lakes
-- Eco-sensitive zones
-
-### 4. Cultural and Traditional Sites
-- Village heritage centers
-- Traditional craft locations
-- Folk performance hubs
-- Tribal heritage areas
-
-### 5. Forgotten or Under-Documented Places
-- Abandoned structures
-- Rare pilgrimage routes
-- Old trade centers
-- Hidden inscriptions
-- Megalithic sites
+- **Web app:** http://localhost:3000
+- **API server:** http://localhost:4000
+- **API docs:** http://localhost:4000/docs
 
 ---
 
-## Structure of Documentation
+## Architecture
 
-Each place documented in this repository will aim to include:
+### Monorepo Structure
 
-- Name of the place
-- District and location
-- Historical background
-- Architectural or geographical features
-- Cultural importance
-- How to reach
-- Coordinates (if available)
-- References (if available)
+```
+unexplored-telangana/
+├── apps/
+│   ├── web/          # React 19 frontend (Vite, TanStack Router, MapLibre)
+│   └── api/          # Fastify REST API with OpenAPI docs
+├── packages/
+│   ├── ui/           # Design system (Tailwind, Radix, Motion)
+│   ├── types/        # Shared TypeScript types
+│   └── config/       # Shared constants and configuration
+├── content/
+│   ├── districts/    # District overviews as MDX
+│   └── locations/    # Destination pages as MDX with frontmatter
+├── geojson/
+│   └── districts/    # GeoJSON district boundary files
+├── docs/             # Architecture and contribution docs
+├── scripts/          # Utility scripts
+├── docker/           # Docker and nginx configuration
+└── .github/          # CI/CD workflows
+```
 
-The goal is structured, factual, and well-organized documentation.
+### Tech Stack
 
----
+| Layer        | Technology                           |
+| ------------ | ------------------------------------ |
+| Runtime      | Bun                                  |
+| Language     | TypeScript 5.x                       |
+| Frontend     | React 19, Vite 6, Tailwind 4         |
+| Router       | TanStack Router                      |
+| Data Fetch   | TanStack Query                       |
+| State        | Zustand                              |
+| Maps         | MapLibre GL JS, OpenStreetMap tiles  |
+| UI           | Tailwind CSS, Radix UI, Motion       |
+| Backend      | Fastify 5, Zod, OpenAPI              |
+| Content      | MDX with frontmatter (Git as CMS)    |
+| Testing      | Vitest, Playwright                   |
+| Tooling      | Biome, Husky, lint-staged            |
+| CI/CD        | GitHub Actions, Docker               |
 
-## Why This Project
+### Design Decisions
 
-Telangana has a rich and layered history — from Satavahanas to Kakatiyas, from Chalukyas to Qutb Shahis — yet many important places remain undocumented or poorly recorded.
+**Why Bun?** Bun provides a unified JavaScript runtime, package manager, and bundler — dramatically simplifying the toolchain. It's significantly faster than Node.js for development workflows and supports TypeScript out of the box.
 
-This repository aims to:
-- Encourage local exploration
-- Promote heritage awareness
-- Support documentation culture
-- Preserve regional knowledge digitally
+**Why MapLibre GL JS?** MapLibre is the open-source fork of Mapbox GL JS. It's fully open, has no usage limits, and works beautifully with OpenStreetMap tiles. Unlike Google Maps, it doesn't require API keys or payments, aligning with our open-source ethos.
 
----
+**Why TanStack Router?** TanStack Router provides type-safe routing with built-in search params, nested layouts, and excellent data loading patterns. Combined with TanStack Query, it gives us a complete data management solution with caching, deduplication, and background refetching.
 
-## Current Progress
+**Why MDX + Git as CMS?** Storing content as MDX files in Git eliminates database dependencies, enables community contributions via pull requests, and provides version history for free. Each location is a self-contained file with structured frontmatter.
 
-- Repository initialized
-- Started documentation with `temples.md`
-- More categories to be added gradually
+**Why a custom design system?** shadcn/ui components are customized with a unique color palette inspired by Telangana's landscape — obsidian, terracotta, saffron, jade, sand, and crimson. The design prioritizes typography, whitespace, and editorial storytelling over dashboards.
 
----
+### Database Strategy
 
-## Future Roadmap
+The current API serves static data from config and content files. The architecture is prepared for a future PostgreSQL + PostGIS migration:
 
-- District-wise categorization
-- Map integration references
-- Image documentation (with proper attribution)
-- Bilingual documentation (English and Telugu)
-- Cross-referenced historical timelines
-- Contribution guidelines
+- **PostGIS** for spatial queries (find locations within a district boundary, filter by proximity)
+- **Prisma ORM** for type-safe database access
+- **Server-side rendering** with React Server Components when the data volume grows
 
----
+### Contributing
 
-## Contribution Guidelines (Planned)
-
-In future, this repository may allow structured contributions including:
-
-- Verified local history
-- Photos with attribution
-- GPS coordinates
-- Field notes
-- Inscription records
-- Oral history documentation
-
-All contributions should prioritize accuracy and authenticity.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines on:
+- Setting up the development environment
+- Adding new locations via MDX
+- Adding GeoJSON district boundaries
+- Code style and conventions
+- Commit message format
 
 ---
 
 ## License
 
-To be decided.
-
----
-
-## Author
-
-Maintained and curated as an independent documentation initiative focused on Telangana’s unexplored heritage.
-
+Unexplored Telangana is open-source software licensed under the [MIT License](./LICENSE). Content (MDX files, images) is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
