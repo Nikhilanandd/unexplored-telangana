@@ -1,0 +1,39 @@
+{
+  "name": "unexplored-telangana",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "dev:web": "bun run --filter @ut/web dev",
+    "dev:api": "bun run --filter @ut/api dev",
+    "build": "bun run --filter '*' build",
+    "build:web": "bun run --filter @ut/web build",
+    "build:api": "bun run --filter @ut/api build",
+    "check": "bun run typecheck && bun run lint",
+    "typecheck": "bun run --filter '*' typecheck",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "prepare": "husky",
+    "clean": "bun run --filter '*' clean"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.1.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,jsonc,css,md}": ["biome check --write --no-errors-on-unmatched"]
+  },
+  "trustedDependencies": ["esbuild", "@swc/core"]
+}
