@@ -1,1 +1,1 @@
-bun run typecheck && bun run test -- run
+bun run typecheck && bun run test -- --run --passWithNoTests
