@@ -1,6 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
 import type { Category } from '@ut/types'
-import { Compass } from 'lucide-react'
 import { useState } from 'react'
 import { DistrictSelector } from '../components/DistrictSelector'
 import { ExploreSidebar } from '../components/ExploreSidebar'
@@ -53,15 +52,6 @@ export default function Explore() {
               />
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="pointer-events-none absolute bottom-6 right-[380px] z-10 hidden md:block">
-        <div className="pointer-events-auto rounded-full border border-slate-200/80 bg-white/90 px-4 py-2 shadow-lg backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90">
-          <p className="font-mono text-[10px] tracking-wider text-slate-400 dark:text-sand-500">
-            <Compass className="mr-1 inline h-3 w-3" />
-            Hover districts to highlight · Click to explore
-          </p>
         </div>
       </div>
     </div>
