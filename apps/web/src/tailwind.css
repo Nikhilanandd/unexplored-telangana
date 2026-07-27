@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-obsidian-50: #f5f0ed;
   --color-obsidian-100: #e8e0d8;

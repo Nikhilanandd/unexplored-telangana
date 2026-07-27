@@ -1,4 +1,5 @@
 export { LOCATIONS, type LocationData } from './locations'
+export { DISTRICT_BOUNDARIES } from './boundaries'
 
 export const APP = {
   name: 'Unexplored Telangana',
@@ -9,10 +10,12 @@ export const APP = {
 
 export const MAP = {
   style: 'https://tiles.openfreemap.org/styles/liberty',
+  styleDark: 'https://tiles.openfreemap.org/styles/liberty',
+  styleLight: 'https://tiles.openfreemap.org/styles/positron',
   defaultCenter: [79.0882, 17.9689] as [number, number],
-  defaultZoom: 7,
-  minZoom: 6,
-  maxZoom: 18,
+  defaultZoom: 7.2,
+  minZoom: 2,
+  maxZoom: 19,
   maxBounds: [76.5, 15.5, 82.0, 20.5] as [number, number, number, number],
   pitch: 0,
   bearing: 0,

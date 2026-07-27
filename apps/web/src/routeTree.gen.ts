@@ -5,10 +5,16 @@ const rootRoute = createRootRoute({
   component: RootLayout,
 })
 
-const indexRoute = createRoute({
+const landingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: lazyRouteComponent(() => import('./pages/Landing')),
+})
+
+const exploreRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/explore',
+  component: lazyRouteComponent(() => import('./pages/Explore')),
 })
 
 const districtRoute = createRoute({
@@ -23,6 +29,6 @@ const locationRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/Destination')),
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, districtRoute, locationRoute])
+const routeTree = rootRoute.addChildren([landingRoute, exploreRoute, districtRoute, locationRoute])
 
 export { routeTree }

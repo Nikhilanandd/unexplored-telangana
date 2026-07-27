@@ -1,182 +1,197 @@
 import { useNavigate } from '@tanstack/react-router'
-import { DISTRICTS } from '@ut/config'
-import { CATEGORIES } from '@ut/types'
-import type { Category } from '@ut/types'
+import { DISTRICTS, LOCATIONS } from '@ut/config'
 import { Button } from '@ut/ui'
-import { ArrowRight, ChevronDown, Compass, MapPin, Search } from 'lucide-react'
+import { ArrowRight, Castle, Compass, Droplets, MapPin, Mountain, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
-import { useState } from 'react'
-import { Map } from '../components/Map'
-import { useStore } from '../store'
+
+const FEATURED = LOCATIONS.slice(0, 5)
+
+const SEASONS = [
+  {
+    title: 'Monsoon Magic',
+    subtitle: 'June – September',
+    description:
+      'Waterfalls roar to life, forests turn emerald, and the entire Deccan breathes fresh.',
+    icon: Droplets,
+    color: 'bg-blue-500/10 text-blue-500',
+  },
+  {
+    title: 'Winter Heritage',
+    subtitle: 'October – February',
+    description:
+      'Perfect weather to explore forts, temples, and archaeological sites across the state.',
+    icon: Castle,
+    color: 'bg-amber-500/10 text-amber-500',
+  },
+  {
+    title: 'Summer Escapes',
+    subtitle: 'March – May',
+    description: 'Head to hill stations, dense forests, and reservoirs for a cool retreat.',
+    icon: Mountain,
+    color: 'bg-emerald-500/10 text-emerald-500',
+  },
+]
 
 export default function Landing() {
   const navigate = useNavigate()
-  const searchQuery = useStore(s => s.searchQuery)
-  const setSearchQuery = useStore(s => s.setSearchQuery)
-  const setActiveDistrict = useStore(s => s.setActiveDistrict)
-  const [showDistricts, setShowDistricts] = useState(false)
-
-  const filteredDistricts = DISTRICTS.filter(
-    d =>
-      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      d.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
-  const handleDistrictSelect = (slug: string) => {
-    setActiveDistrict(slug)
-    navigate({ to: '/districts/$slug', params: { slug } })
-  }
-
-  const handleCategorySelect = (category: Category) => {
-    navigate({
-      to: '/districts/$slug',
-      params: { slug: 'all' },
-      search: { category },
-    })
-  }
 
   return (
-    <div className="relative h-[calc(100vh-4rem)] w-full overflow-hidden">
-      <Map
-        className="absolute inset-0"
-        onMarkerClick={slug => navigate({ to: '/locations/$slug', params: { slug } })}
-      />
+    <div className="min-h-screen">
+      <section className="relative overflow-hidden bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 px-6 pb-32 pt-24 dark:from-obsidian-950 dark:via-obsidian-900 dark:to-obsidian-950 from-slate-50 via-white to-slate-50">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.06)_0%,transparent_60%)]" />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 top-0 z-10">
-        <div className="mx-auto flex h-full max-w-6xl flex-col justify-center px-6 pb-32">
+        <div className="relative mx-auto max-w-4xl text-center">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="pointer-events-auto max-w-2xl"
+            transition={{ duration: 0.7, ease: 'easeOut' }}
           >
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="font-mono text-xs uppercase tracking-[0.3em] text-saffron-400"
-            >
-              Explore the untold Telangana
-            </motion.p>
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-saffron-500">
+              A Digital Atlas of Telangana
+            </p>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="mt-6 font-serif text-5xl font-bold leading-tight text-sand-100 md:text-7xl"
-            >
+            <h1 className="mt-8 font-serif text-5xl font-bold leading-tight tracking-tight text-slate-900 md:text-7xl dark:text-sand-100">
               Every district
               <br />
-              has a story.
-            </motion.h1>
+              <span className="text-saffron-500">has a story.</span>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="mt-6 max-w-lg text-lg leading-relaxed text-sand-400"
-            >
-              From Kakatiya ruins to hidden waterfalls, from tribal festivals to forgotten forts —
-              uncover Telangana beyond the guidebooks.
-            </motion.p>
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-sand-400">
+              From the Kakatiya ruins of Warangal to the cascading waterfalls of Adilabad, from
+              Hyderabad&#39;s 400-year-old bazaars to the prehistoric rock art of Pandavula Gutta —
+              discover a Telangana that most travelers never see.
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2, duration: 0.6 }}
-              className="pointer-events-auto mt-10 flex flex-wrap items-center gap-4"
-            >
-              <div className="relative w-full max-w-sm">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-sand-500" />
-                <input
-                  type="text"
-                  placeholder="Search districts, temples, waterfalls..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="h-12 w-full rounded-xl border border-obsidian-600 bg-obsidian-800/90 pl-10 pr-4 text-sm text-sand-100 placeholder:text-sand-500 backdrop-blur-md focus:border-saffron-500 focus:outline-none focus:ring-1 focus:ring-saffron-500"
-                />
-              </div>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Button
+                size="lg"
+                onClick={() => navigate({ to: '/explore' })}
+                className="shadow-lg shadow-saffron-500/20"
+              >
+                <Compass className="h-4 w-4" />
+                Start Exploring
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button variant="secondary" size="lg" onClick={() => navigate({ to: '/explore' })}>
+                <MapPin className="h-4 w-4" />
+                Browse Districts
+              </Button>
+            </div>
+          </motion.div>
 
-              <div className="relative">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onClick={() => setShowDistricts(!showDistricts)}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="mt-20 text-left"
+          >
+            <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-saffron-500">
+              Featured Destinations
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {FEATURED.map((loc, i) => (
+                <motion.button
+                  key={loc.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + i * 0.1 }}
+                  onClick={() => navigate({ to: '/locations/$slug', params: { slug: loc.slug } })}
+                  className="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition-all hover:border-saffron-300 hover:shadow-md dark:border-obsidian-800 dark:bg-obsidian-900/50 dark:hover:border-saffron-700"
                 >
-                  <MapPin className="h-4 w-4" />
-                  Browse Districts
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform ${showDistricts ? 'rotate-180' : ''}`}
-                  />
-                </Button>
-
-                {showDistricts && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="absolute left-0 top-full mt-2 max-h-64 w-72 overflow-y-auto rounded-xl border border-obsidian-600 bg-obsidian-800/95 p-1 backdrop-blur-xl"
-                  >
-                    {filteredDistricts.map(d => (
-                      <button
-                        key={d.slug}
-                        onClick={() => {
-                          handleDistrictSelect(d.slug)
-                          setShowDistricts(false)
-                        }}
-                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-sand-300 transition-colors hover:bg-obsidian-700 hover:text-sand-100"
-                      >
-                        <MapPin className="h-3.5 w-3.5 shrink-0 text-saffron-500" />
-                        <span>{d.name}</span>
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.8, duration: 0.6 }}
-              className="pointer-events-auto mt-16"
-            >
-              <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-sand-500">
-                Explore by category
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {CATEGORIES.slice(0, 8).map(cat => (
-                  <button
-                    key={cat.id}
-                    onClick={() => handleCategorySelect(cat.id)}
-                    className="rounded-full border border-obsidian-600 bg-obsidian-800/60 px-4 py-2 text-sm text-sand-300 backdrop-blur-sm transition-all hover:border-saffron-500/50 hover:bg-obsidian-700 hover:text-sand-100"
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-                <button
-                  onClick={() =>
-                    navigate({
-                      to: '/districts/$slug',
-                      params: { slug: 'all' },
-                    })
-                  }
-                  className="group inline-flex items-center gap-1 rounded-full border border-saffron-500/30 bg-saffron-500/10 px-4 py-2 text-sm text-saffron-400 backdrop-blur-sm transition-all hover:bg-saffron-500/20"
-                >
-                  View all
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                </button>
-              </div>
-            </motion.div>
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-saffron-500/10 text-lg">
+                    <Sparkles className="h-5 w-5 text-saffron-500" />
+                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-slate-800 group-hover:text-saffron-600 dark:text-sand-200 dark:group-hover:text-saffron-400">
+                    {loc.title}
+                  </h3>
+                  <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-500 dark:text-sand-400">
+                    {loc.description}
+                  </p>
+                  <div className="mt-3 flex items-center gap-2">
+                    <span className="rounded-full bg-saffron-500/10 px-2.5 py-0.5 text-[10px] font-medium text-saffron-500">
+                      {loc.category.replace(/-/g, ' ')}
+                    </span>
+                    <span className="text-[10px] text-slate-400 dark:text-sand-500">
+                      {DISTRICTS.find(d => d.slug === loc.district)?.name ?? loc.district}
+                    </span>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
           </motion.div>
         </div>
-      </div>
+      </section>
 
-      <div className="absolute bottom-6 right-6 z-10 rounded-full border border-obsidian-600 bg-obsidian-800/80 px-4 py-2 backdrop-blur-md">
-        <p className="font-mono text-xs text-sand-400">
-          <Compass className="mr-1.5 inline h-3 w-3" />
-          Scroll to explore · Drag to pan
-        </p>
-      </div>
+      <section className="bg-slate-100/50 px-6 py-24 dark:bg-obsidian-900/50">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-saffron-500">
+              Seasonal Highlights
+            </p>
+            <h2 className="mt-4 font-serif text-3xl font-bold text-slate-900 md:text-4xl dark:text-sand-100">
+              Telangana through the year
+            </h2>
+          </motion.div>
+
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {SEASONS.map((season, i) => (
+              <motion.div
+                key={season.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                className="rounded-2xl border border-slate-200 bg-white p-6 text-left transition-all hover:shadow-md dark:border-obsidian-800 dark:bg-obsidian-900/50"
+              >
+                <div className={`mb-4 inline-flex rounded-xl p-3 ${season.color}`}>
+                  <season.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-serif text-lg font-semibold text-slate-800 dark:text-sand-200">
+                  {season.title}
+                </h3>
+                <p className="mt-1 text-xs font-medium text-slate-400 dark:text-sand-500">
+                  {season.subtitle}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-slate-500 dark:text-sand-400">
+                  {season.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-2xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-saffron-500">
+              Your journey begins
+            </p>
+            <h2 className="mt-4 font-serif text-3xl font-bold text-slate-900 md:text-4xl dark:text-sand-100">
+              Ready to explore?
+            </h2>
+            <p className="mt-4 text-slate-600 dark:text-sand-400">
+              42 hand-picked destinations · 33 districts · 13 categories
+            </p>
+            <div className="mt-8">
+              <Button size="lg" onClick={() => navigate({ to: '/explore' })}>
+                <Compass className="h-4 w-4" />
+                Open the Map
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   )
 }

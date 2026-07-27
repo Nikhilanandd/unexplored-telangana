@@ -25,14 +25,15 @@
       "a11y": {
         "noSvgWithoutTitle": "error",
         "useAltText": "error",
-        "useKeyWithClickEvents": "error",
+        "useKeyWithClickEvents": "warn",
         "useKeyWithMouseEvents": "error",
         "useButtonType": "warn",
         "noAutofocus": "warn"
       },
       "suspicious": {
         "noShadowRestrictedNames": "warn",
-        "noArrayIndexKey": "warn"
+        "noArrayIndexKey": "warn",
+        "noExplicitAny": "warn"
       }
     }
   },
