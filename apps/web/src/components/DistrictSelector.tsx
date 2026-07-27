@@ -1,4 +1,4 @@
-import { DISTRICTS } from '@ut/config'
+import { DISTRICTS, getDistrictLocationCount } from '@ut/config'
 import { MapPin, Search, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
@@ -48,7 +48,7 @@ export function DistrictSelector({ selectedDistrict, onSelect }: DistrictSelecto
         <span className="flex-1 truncate">{selected ? selected.name : 'All Districts'}</span>
         {selected && (
           <span className="shrink-0 rounded-full bg-saffron-500/10 px-2 py-0.5 text-[10px] font-medium text-saffron-400">
-            {selected.locationCount} places
+            {getDistrictLocationCount(selected.slug)} places
           </span>
         )}
       </button>
@@ -97,7 +97,7 @@ export function DistrictSelector({ selectedDistrict, onSelect }: DistrictSelecto
                   <MapPin className="h-3.5 w-3.5 shrink-0 text-saffron-500" />
                   <span className="flex-1 truncate">{d.name}</span>
                   <span className="shrink-0 text-[10px] text-slate-400 dark:text-sand-500">
-                    {d.locationCount}
+                    {getDistrictLocationCount(d.slug)}
                   </span>
                 </button>
               ))}

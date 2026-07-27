@@ -214,7 +214,9 @@ function bindMapEvents(
   })
 
   map.on('click', 'clusters', e => {
-    const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
+    const features = map.queryRenderedFeatures(e.point, {
+      layers: ['clusters'],
+    })
     const clusterId = features[0]?.properties?.cluster_id
     if (clusterId != null) {
       const source = map.getSource('locations') as maplibregl.GeoJSONSource
@@ -279,13 +281,20 @@ export function MapView({
       pitch: MAP.pitch,
       bearing: MAP.bearing,
       attributionControl: false,
+      renderWorldCopies: true,
+      dragPan: true,
+      scrollZoom: true,
+      boxZoom: true,
+      doubleClickZoom: true,
+      touchZoomRotate: true,
+      keyboard: true,
     })
 
-    map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
     map.addControl(
       new maplibregl.NavigationControl({ showCompass: true, showZoom: true }),
       'bottom-left'
     )
+    map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right')
 
     map.on('load', () => {
       mapRef.current = map

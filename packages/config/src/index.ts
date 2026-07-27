@@ -1,5 +1,10 @@
 export { LOCATIONS, type LocationData } from './locations'
 export { DISTRICT_BOUNDARIES } from './boundaries'
+import { LOCATIONS } from './locations'
+
+export function getDistrictLocationCount(slug: string): number {
+  return LOCATIONS.filter(l => l.district === slug).length
+}
 
 export const APP = {
   name: 'Unexplored Telangana',
@@ -9,12 +14,12 @@ export const APP = {
 } as const
 
 export const MAP = {
-  style: 'https://tiles.openfreemap.org/styles/liberty',
-  styleDark: 'https://tiles.openfreemap.org/styles/liberty',
-  styleLight: 'https://tiles.openfreemap.org/styles/positron',
+  style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+  styleDark: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+  styleLight: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
   defaultCenter: [79.0882, 17.9689] as [number, number],
   defaultZoom: 7.2,
-  minZoom: 2,
+  minZoom: 1,
   maxZoom: 19,
   pitch: 0,
   bearing: 0,
