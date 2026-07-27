@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "skipLibCheck": true,
+    "paths": {
+      "@ut/ui": ["../../packages/ui/src"],
+      "@ut/ui/*": ["../../packages/ui/src/*"],
+      "@ut/types": ["../../packages/types/src"],
+      "@ut/types/*": ["../../packages/types/src/*"],
+      "@ut/config": ["../../packages/config/src"]
+    }
+  },
+  "include": ["src"]
+}
