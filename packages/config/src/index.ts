@@ -16,7 +16,6 @@ export const MAP = {
   defaultZoom: 7.2,
   minZoom: 2,
   maxZoom: 19,
-  maxBounds: [76.5, 15.5, 82.0, 20.5] as [number, number, number, number],
   pitch: 0,
   bearing: 0,
   clusterRadius: 50,

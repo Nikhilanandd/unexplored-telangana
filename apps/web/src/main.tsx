@@ -1,4 +1,5 @@
 import './tailwind.css'
+import 'maplibre-gl/dist/maplibre-gl.css'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider } from '@tanstack/react-router'

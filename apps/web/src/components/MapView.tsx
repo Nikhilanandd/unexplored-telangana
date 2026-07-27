@@ -47,6 +47,7 @@ function buildLocationGeoJSON(
         title: l.title,
         slug: l.slug,
         category: l.category,
+        district: l.district,
         color: CATEGORY_COLORS[l.category] ?? '#f59e0b',
       },
     })),
@@ -57,20 +58,39 @@ function addMapLayers(map: maplibregl.Map) {
   map.addSource('district-boundaries', {
     type: 'geojson',
     data: DISTRICT_BOUNDARIES as any,
+    promoteId: 'slug',
   })
 
   map.addLayer({
     id: 'district-fills',
     type: 'fill',
     source: 'district-boundaries',
-    paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.08 },
+    paint: {
+      'fill-color': '#f59e0b',
+      'fill-opacity': 0.04,
+    },
+  })
+
+  map.addLayer({
+    id: 'district-hover',
+    type: 'fill',
+    source: 'district-boundaries',
+    paint: {
+      'fill-color': '#f59e0b',
+      'fill-opacity': 0,
+    },
+    filter: ['==', ['get', 'slug'], ''],
   })
 
   map.addLayer({
     id: 'district-outlines',
     type: 'line',
     source: 'district-boundaries',
-    paint: { 'line-color': '#f59e0b', 'line-width': 0.8, 'line-opacity': 0.25 },
+    paint: {
+      'line-color': '#f59e0b',
+      'line-width': 0.6,
+      'line-opacity': 0.2,
+    },
   })
 
   map.addSource('locations', {
@@ -88,10 +108,10 @@ function addMapLayers(map: maplibregl.Map) {
     filter: ['has', 'point_count'],
     paint: {
       'circle-color': ['step', ['get', 'point_count'], '#f59e0b', 10, '#c46848', 30, '#3b82f6'],
-      'circle-radius': ['step', ['get', 'point_count'], 18, 10, 24, 30, 32],
+      'circle-radius': ['step', ['get', 'point_count'], 20, 10, 26, 30, 34],
       'circle-stroke-width': 2,
-      'circle-stroke-color': '#ffffff',
-      'circle-opacity': 0.9,
+      'circle-stroke-color': 'rgba(255,255,255,0.9)',
+      'circle-opacity': 0.95,
     },
   })
 
@@ -114,11 +134,11 @@ function addMapLayers(map: maplibregl.Map) {
     source: 'locations',
     filter: ['!', ['has', 'point_count']],
     paint: {
-      'circle-radius': 5,
+      'circle-radius': ['interpolate', ['linear'], ['zoom'], 6, 3, 9, 5, 15, 8],
       'circle-color': ['get', 'color'],
-      'circle-stroke-width': 1.5,
-      'circle-stroke-color': '#ffffff',
-      'circle-opacity': 0.9,
+      'circle-stroke-width': 2,
+      'circle-stroke-color': 'rgba(255,255,255,0.95)',
+      'circle-opacity': 0.92,
     },
   })
 }
@@ -128,27 +148,69 @@ function bindMapEvents(
   onDistrictClick?: (slug: string) => void,
   onMarkerClick?: (slug: string) => void
 ) {
-  map.on('click', 'district-fills', e => {
-    const slug = (e.features?.[0]?.properties as any)?.slug as string | undefined
-    if (slug) onDistrictClick?.(slug)
+  let hoveredDistrictId: string | null = null
+  const tooltip = new maplibregl.Popup({
+    closeButton: false,
+    closeOnClick: false,
+    offset: 12,
+    maxWidth: '240px',
   })
 
-  map.on('mouseenter', 'district-fills', () => {
-    map.getCanvas().style.cursor = 'pointer'
+  map.on('mousemove', 'district-fills', e => {
+    if (e.features?.[0]) {
+      const props = e.features[0].properties as Record<string, unknown>
+      const slug = props.slug as string
+      if (slug !== hoveredDistrictId) {
+        map.setFilter('district-hover', ['==', ['get', 'slug'], slug])
+        map.setPaintProperty('district-hover', 'fill-opacity', 0.12)
+        map.getCanvas().style.cursor = 'pointer'
+        hoveredDistrictId = slug
+      }
+    }
   })
+
   map.on('mouseleave', 'district-fills', () => {
+    map.setFilter('district-hover', ['==', ['get', 'slug'], ''])
+    map.setPaintProperty('district-hover', 'fill-opacity', 0)
     map.getCanvas().style.cursor = ''
+    hoveredDistrictId = null
+  })
+
+  map.on('click', 'district-fills', e => {
+    if (e.features?.[0]) {
+      const slug = (e.features[0].properties as Record<string, unknown>).slug as string
+      if (slug) onDistrictClick?.(slug)
+    }
+  })
+
+  map.on('mousemove', 'markers-layer', e => {
+    map.getCanvas().style.cursor = 'pointer'
+    if (e.features?.[0]) {
+      const props = e.features[0].properties as Record<string, unknown>
+      const title = props.title as string
+      const category = props.category as string
+      const coordinates = (e.features[0].geometry as { coordinates: number[] }).coordinates
+
+      tooltip
+        .setLngLat(coordinates as [number, number])
+        .setHTML(
+          `<div style="font-family:Inter,system-ui,sans-serif;padding:6px 10px;font-size:12px;">
+            <span style="font-weight:600;color:#1a1a1a;">${title}</span>
+            <span style="font-size:10px;color:#999;margin-left:6px;">${category.replace(/-/g, ' ')}</span>
+          </div>`
+        )
+        .addTo(map)
+    }
+  })
+
+  map.on('mouseleave', 'markers-layer', () => {
+    map.getCanvas().style.cursor = ''
+    tooltip.remove()
   })
 
   map.on('click', 'markers-layer', e => {
-    const slug = (e.features?.[0]?.properties as any)?.slug as string | undefined
+    const slug = (e.features?.[0]?.properties as Record<string, unknown>)?.slug as string
     if (slug) onMarkerClick?.(slug)
-  })
-  map.on('mouseenter', 'markers-layer', () => {
-    map.getCanvas().style.cursor = 'pointer'
-  })
-  map.on('mouseleave', 'markers-layer', () => {
-    map.getCanvas().style.cursor = ''
   })
 
   map.on('click', 'clusters', e => {
@@ -157,17 +219,37 @@ function bindMapEvents(
     if (clusterId != null) {
       const source = map.getSource('locations') as maplibregl.GeoJSONSource
       source.getClusterExpansionZoom(clusterId).then(zoom => {
-        const geom = (features[0] as any)?.geometry
+        const geom = (features[0] as any)?.geometry as { coordinates: number[] } | undefined
         if (geom?.coordinates && zoom != null) {
           map.flyTo({
             center: geom.coordinates as [number, number],
-            zoom: zoom,
+            zoom: zoom + 0.5,
             duration: 800,
           })
         }
       })
     }
   })
+
+  map.on('mouseenter', 'clusters', () => {
+    map.getCanvas().style.cursor = 'pointer'
+  })
+  map.on('mouseleave', 'clusters', () => {
+    map.getCanvas().style.cursor = ''
+  })
+}
+
+function computeBounds(districtSlug: string | null | undefined): maplibregl.LngLatBounds | null {
+  if (!districtSlug) return null
+  const feat = DISTRICT_BOUNDARIES.features.find(f => f.properties.slug === districtSlug)
+  if (!feat) return null
+  const bounds = new maplibregl.LngLatBounds()
+  const coords = (feat.geometry as { type: string; coordinates: number[][][] }).coordinates[0] as [
+    number,
+    number,
+  ][]
+  for (const c of coords) bounds.extend(c)
+  return bounds
 }
 
 export function MapView({
@@ -202,7 +284,7 @@ export function MapView({
     map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left')
     map.addControl(
       new maplibregl.NavigationControl({ showCompass: true, showZoom: true }),
-      'bottom-right'
+      'bottom-left'
     )
 
     map.on('load', () => {
@@ -243,6 +325,13 @@ export function MapView({
       const geoJSON = buildLocationGeoJSON(selectedDistrict, activeCategory)
       const src = map.getSource('locations') as maplibregl.GeoJSONSource
       if (src) src.setData(geoJSON as any)
+
+      if (selectedDistrict) {
+        const bounds = computeBounds(selectedDistrict)
+        if (bounds) {
+          map.fitBounds(bounds, { padding: 80, duration: 0, maxZoom: 12 })
+        }
+      }
     }
 
     layersReadyRef.current = false
@@ -252,43 +341,45 @@ export function MapView({
 
   useEffect(() => {
     if (!mapRef.current || !layersReadyRef.current) return
+    const map = mapRef.current
 
     const geoJSON = buildLocationGeoJSON(selectedDistrict, activeCategory)
-    const src = mapRef.current.getSource('locations') as maplibregl.GeoJSONSource
+    const src = map.getSource('locations') as maplibregl.GeoJSONSource
     if (src) src.setData(geoJSON as any)
 
     if (selectedDistrict !== prevDistrictRef.current) {
       prevDistrictRef.current = selectedDistrict
 
       if (selectedDistrict) {
-        const feat = DISTRICT_BOUNDARIES.features.find(f => f.properties.slug === selectedDistrict)
-        if (feat) {
-          mapRef.current.setPaintProperty('district-fills', 'fill-opacity', [
-            'case',
-            ['==', ['get', 'slug'], selectedDistrict],
-            0.15,
-            0.0,
-          ])
-          mapRef.current.setPaintProperty('district-outlines', 'line-opacity', [
-            'case',
-            ['==', ['get', 'slug'], selectedDistrict],
-            0.6,
-            0.0,
-          ])
+        map.setPaintProperty('district-fills', 'fill-opacity', [
+          'case',
+          ['==', ['get', 'slug'], selectedDistrict],
+          0.12,
+          0.0,
+        ])
+        map.setPaintProperty('district-outlines', 'line-opacity', [
+          'case',
+          ['==', ['get', 'slug'], selectedDistrict],
+          0.5,
+          0.0,
+        ])
 
-          const bounds = new maplibregl.LngLatBounds()
-          const coords = (feat.geometry as { type: string; coordinates: number[][][] })
-            .coordinates[0] as [number, number][]
-          for (const c of coords) bounds.extend(c)
-          mapRef.current.fitBounds(bounds, {
+        const bounds = computeBounds(selectedDistrict)
+        if (bounds) {
+          map.fitBounds(bounds, {
             padding: 80,
             duration: 1200,
             maxZoom: 12,
           })
         }
       } else {
-        mapRef.current.setPaintProperty('district-fills', 'fill-opacity', 0.08)
-        mapRef.current.setPaintProperty('district-outlines', 'line-opacity', 0.25)
+        map.setPaintProperty('district-fills', 'fill-opacity', 0.04)
+        map.setPaintProperty('district-outlines', 'line-opacity', 0.2)
+        map.flyTo({
+          center: MAP.defaultCenter,
+          zoom: MAP.defaultZoom,
+          duration: 1000,
+        })
       }
     }
   }, [selectedDistrict, activeCategory])

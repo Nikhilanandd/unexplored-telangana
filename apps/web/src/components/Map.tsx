@@ -64,7 +64,6 @@ export function Map({
       zoom: MAP.defaultZoom,
       minZoom: MAP.minZoom,
       maxZoom: MAP.maxZoom,
-      maxBounds: MAP.maxBounds,
       pitch: MAP.pitch,
       bearing: MAP.bearing,
       attributionControl: false,
