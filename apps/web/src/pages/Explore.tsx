@@ -42,37 +42,34 @@ export default function Explore() {
           <div className="p-4">
             <DistrictSelector selectedDistrict={selectedDistrict} onSelect={setSelectedDistrict} />
           </div>
+          {hasGoogleKey && (
+            <div className="flex border-t border-slate-200/80 dark:border-obsidian-700/80">
+              <button
+                onClick={() => setMapProvider('maplibre')}
+                className={`flex flex-1 items-center justify-center gap-1.5 rounded-bl-2xl px-3 py-2 text-xs font-medium transition-all ${
+                  mapProvider === 'maplibre'
+                    ? 'bg-saffron-500 text-white'
+                    : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
+                }`}
+              >
+                <Globe className="h-3.5 w-3.5" />
+                MapLibre
+              </button>
+              <button
+                onClick={() => setMapProvider('google')}
+                className={`flex flex-1 items-center justify-center gap-1.5 rounded-br-2xl px-3 py-2 text-xs font-medium transition-all ${
+                  mapProvider === 'google'
+                    ? 'bg-saffron-500 text-white'
+                    : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
+                }`}
+              >
+                <Map className="h-3.5 w-3.5" />
+                Google
+              </button>
+            </div>
+          )}
         </div>
       </div>
-
-      {hasGoogleKey && (
-        <div className="pointer-events-none absolute right-4 top-4 z-10">
-          <div className="pointer-events-auto flex rounded-xl border border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90">
-            <button
-              onClick={() => setMapProvider('maplibre')}
-              className={`flex items-center gap-1.5 rounded-l-xl px-3 py-2 text-xs font-medium transition-all ${
-                mapProvider === 'maplibre'
-                  ? 'bg-saffron-500 text-white'
-                  : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
-              }`}
-            >
-              <Globe className="h-3.5 w-3.5" />
-              MapLibre
-            </button>
-            <button
-              onClick={() => setMapProvider('google')}
-              className={`flex items-center gap-1.5 rounded-r-xl px-3 py-2 text-xs font-medium transition-all ${
-                mapProvider === 'google'
-                  ? 'bg-saffron-500 text-white'
-                  : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
-              }`}
-            >
-              <Map className="h-3.5 w-3.5" />
-              Google
-            </button>
-          </div>
-        </div>
-      )}
 
       <div className="pointer-events-none absolute bottom-4 right-4 top-4 z-10">
         <div className="pointer-events-auto h-full w-[340px] rounded-2xl border border-slate-200/80 bg-white/90 shadow-lg backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90 overflow-hidden">
