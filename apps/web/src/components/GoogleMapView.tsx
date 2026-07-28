@@ -2,7 +2,7 @@
 
 import { DISTRICT_BOUNDARIES, LOCATIONS, MAP } from '@ut/config'
 import type { Category } from '@ut/types'
-import { Loader } from '@googlemaps/js-api-loader'
+import { setOptions, importLibrary } from '@googlemaps/js-api-loader'
 import { useCallback, useEffect, useRef } from 'react'
 import { useTheme } from '../theme'
 
@@ -41,9 +41,27 @@ function getFilteredLocations(
 }
 
 const apiKey = (import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY ?? ''
-const googleLoaded = apiKey
-  ? (new (Loader as any)({ apiKey, version: 'weekly' }) as { load: () => Promise<void> })
-  : null
+
+let loaderReady = false
+let loaderPromise: Promise<void> | null = null
+
+function ensureGoogleMapsLoaded(): Promise<void> {
+  if (loaderReady) return Promise.resolve()
+  if (loaderPromise) return loaderPromise
+
+  if (!apiKey) {
+    return Promise.reject(new Error('VITE_GOOGLE_MAPS_API_KEY not set'))
+  }
+
+  loaderPromise = (async () => {
+    setOptions({ key: apiKey, v: 'weekly' })
+    await importLibrary('maps')
+    await importLibrary('marker')
+    loaderReady = true
+  })()
+
+  return loaderPromise
+}
 
 export function GoogleMapView({
   selectedDistrict,
@@ -56,7 +74,6 @@ export function GoogleMapView({
   const mapRef = useRef<google.maps.Map | null>(null)
   const polygonsRef = useRef<Map<string, google.maps.Polygon>>(new Map())
   const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([])
-  const infoWindowRef = useRef<google.maps.InfoWindow | null>(null)
   const prevDistrictRef = useRef<string | null | undefined>(null)
   const { theme } = useTheme()
 
@@ -73,6 +90,7 @@ export function GoogleMapView({
 
   const updateMarkers = useCallback(() => {
     if (!mapRef.current) return
+
     for (const marker of markersRef.current) {
       marker.map = null
     }
@@ -129,7 +147,6 @@ export function GoogleMapView({
     })
 
     mapRef.current = map
-    infoWindowRef.current = new google.maps.InfoWindow()
 
     for (const feat of DISTRICT_BOUNDARIES.features) {
       const coords = ((feat.geometry as any).coordinates[0] as [number, number][]).map(
@@ -173,11 +190,9 @@ export function GoogleMapView({
   }, [])
 
   useEffect(() => {
-    if (googleLoaded) {
-      googleLoaded.load().then(() => {
-        initMap()
-      })
-    }
+    ensureGoogleMapsLoaded().then(() => {
+      initMap()
+    })
     return () => {
       mapRef.current = null
     }
@@ -204,10 +219,18 @@ export function GoogleMapView({
           const bounds = new google.maps.LatLngBounds()
           const coords = (feat.geometry as any).coordinates[0] as [number, number][]
           for (const [lng, lat] of coords) bounds.extend({ lat, lng })
-          map.fitBounds(bounds, { top: 80, right: 380, bottom: 80, left: 80 })
+          map.fitBounds(bounds, {
+            top: 80,
+            right: 380,
+            bottom: 80,
+            left: 80,
+          })
         }
       } else {
-        map.setCenter({ lat: MAP.defaultCenter[1], lng: MAP.defaultCenter[0] })
+        map.setCenter({
+          lat: MAP.defaultCenter[1],
+          lng: MAP.defaultCenter[0],
+        })
         map.setZoom(MAP.defaultZoom)
       }
     }
