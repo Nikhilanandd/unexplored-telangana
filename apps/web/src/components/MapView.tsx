@@ -20,6 +20,22 @@ const CATEGORY_COLORS: Record<string, string> = {
   'hidden-gems': '#ec4899',
 }
 
+const CATEGORY_EMOJI: Record<string, string> = {
+  waterfalls: '💧',
+  forts: '🏰',
+  temples: '🛕',
+  lakes: '🌊',
+  reservoirs: '🏗',
+  archaeological: '🏛',
+  'eco-tourism': '🌿',
+  food: '🍛',
+  viewpoints: '🏔',
+  wildlife: '🐾',
+  camping: '⛺',
+  museums: '🏛',
+  'hidden-gems': '💎',
+}
+
 interface MapViewProps {
   selectedDistrict?: string | null
   activeCategory?: Category | null
@@ -134,7 +150,7 @@ function addMapLayers(map: maplibregl.Map) {
     source: 'locations',
     filter: ['!', ['has', 'point_count']],
     paint: {
-      'circle-radius': ['interpolate', ['linear'], ['zoom'], 6, 3, 9, 5, 15, 8],
+      'circle-radius': ['interpolate', ['linear'], ['zoom'], 6, 6, 9, 8, 12, 10, 18, 14],
       'circle-color': ['get', 'color'],
       'circle-stroke-width': 2,
       'circle-stroke-color': 'rgba(255,255,255,0.95)',
@@ -188,15 +204,12 @@ function bindMapEvents(
     if (e.features?.[0]) {
       const props = e.features[0].properties as Record<string, unknown>
       const title = props.title as string
-      const category = props.category as string
       const coordinates = (e.features[0].geometry as { coordinates: number[] }).coordinates
-
       tooltip
         .setLngLat(coordinates as [number, number])
         .setHTML(
           `<div style="font-family:Inter,system-ui,sans-serif;padding:6px 10px;font-size:12px;">
             <span style="font-weight:600;color:#1a1a1a;">${title}</span>
-            <span style="font-size:10px;color:#999;margin-left:6px;">${category.replace(/-/g, ' ')}</span>
           </div>`
         )
         .addTo(map)
@@ -208,9 +221,53 @@ function bindMapEvents(
     tooltip.remove()
   })
 
+  const infoPopup = new maplibregl.Popup({
+    closeButton: true,
+    closeOnClick: true,
+    offset: 14,
+    maxWidth: '280px',
+  })
+
   map.on('click', 'markers-layer', e => {
-    const slug = (e.features?.[0]?.properties as Record<string, unknown>)?.slug as string
-    if (slug) onMarkerClick?.(slug)
+    if (!e.features?.[0]) return
+    const props = e.features[0].properties as Record<string, unknown>
+    const title = props.title as string
+    const slug = props.slug as string
+    const category = props.category as string
+    const color = props.color as string
+    const coordinates = (e.features[0].geometry as { coordinates: number[] }).coordinates
+
+    const loc = LOCATIONS.find(l => l.slug === slug)
+    const emoji = CATEGORY_EMOJI[category] ?? '📍'
+
+    infoPopup
+      .setLngLat(coordinates as [number, number])
+      .setHTML(
+        `<div style="font-family:Inter,system-ui,sans-serif;padding:8px 4px 4px">
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px">
+            <span style="font-size:22px;line-height:1">${emoji}</span>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:#111;margin-bottom:2px">${title}</div>
+              <span style="display:inline-block;background:${color ?? '#f59e0b'};color:#fff;padding:1px 7px;border-radius:8px;font-size:10px;font-weight:500;text-transform:capitalize">${category.replace(/-/g, ' ')}</span>
+            </div>
+          </div>
+          ${loc ? `<p style="font-size:11px;color:#555;line-height:1.5;margin:0 0 10px 0">${loc.description.slice(0, 120)}...</p>` : ''}
+          <a href="#" style="display:inline-block;padding:6px 14px;background:#f59e0b;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">View details →</a>
+        </div>`
+      )
+      .addTo(map)
+
+    const container = infoPopup.getElement()
+    if (container) {
+      const link = container.querySelector('a')
+      if (link) {
+        link.addEventListener('click', e => {
+          e.preventDefault()
+          infoPopup.remove()
+          onMarkerClick?.(slug)
+        })
+      }
+    }
   })
 
   map.on('click', 'clusters', e => {
