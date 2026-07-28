@@ -11,11 +11,12 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ut/ui": "workspace:*",
-    "@ut/types": "workspace:*",
-    "@ut/config": "workspace:*",
+    "@googlemaps/js-api-loader": "^2.1.1",
     "@tanstack/react-query": "^5.71.1",
     "@tanstack/react-router": "^1.115.0",
+    "@ut/config": "workspace:*",
+    "@ut/types": "workspace:*",
+    "@ut/ui": "workspace:*",
     "lucide-react": "^0.503.0",
     "maplibre-gl": "^5.3.0",
     "motion": "^12.9.0",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.4",
+    "@types/google.maps": "^3.65.3",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^4.4.1",

@@ -4,6 +4,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "skipLibCheck": true,
+    "types": ["google.maps"],
     "paths": {
       "@ut/ui": ["../../packages/ui/src"],
       "@ut/ui/*": ["../../packages/ui/src/*"],
