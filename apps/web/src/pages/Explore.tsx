@@ -28,68 +28,59 @@ export default function Explore() {
   const hasGoogleKey = !!(import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY
 
   return (
-    <div className="relative flex h-[calc(100vh-4rem)] overflow-hidden">
-      <div className="absolute inset-0">
-        <MapComponent
-          className="h-full w-full"
-          selectedDistrict={selectedDistrict}
-          activeCategory={activeCategory}
-          onDistrictClick={handleDistrictClick}
-          onMarkerClick={handleMarkerClick}
-        />
+    <div className="relative flex h-[calc(100vh-4rem)]">
+      <MapComponent
+        className="h-full w-full"
+        selectedDistrict={selectedDistrict}
+        activeCategory={activeCategory}
+        onDistrictClick={handleDistrictClick}
+        onMarkerClick={handleMarkerClick}
+      />
+
+      <div className="pointer-events-none absolute left-4 top-4 z-10">
+        <div className="pointer-events-auto w-72 rounded-2xl border border-slate-200/80 bg-white/90 shadow-lg backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90">
+          <div className="p-4">
+            <DistrictSelector selectedDistrict={selectedDistrict} onSelect={setSelectedDistrict} />
+          </div>
+        </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 z-10">
-        <div className="pointer-events-auto mx-auto flex h-full max-w-7xl">
-          <div className="flex w-full flex-col gap-3 px-4 pb-4">
-            <div className="flex items-start justify-between pt-4">
-              <div className="w-72 rounded-2xl border border-slate-200/80 bg-white/90 shadow-lg backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90">
-                <div className="p-4">
-                  <DistrictSelector
-                    selectedDistrict={selectedDistrict}
-                    onSelect={setSelectedDistrict}
-                  />
-                </div>
-              </div>
-
-              {hasGoogleKey && (
-                <div className="flex rounded-xl border border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90">
-                  <button
-                    onClick={() => setMapProvider('maplibre')}
-                    className={`flex items-center gap-1.5 rounded-l-xl px-3 py-2 text-xs font-medium transition-all ${
-                      mapProvider === 'maplibre'
-                        ? 'bg-saffron-500 text-white'
-                        : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
-                    }`}
-                  >
-                    <Globe className="h-3.5 w-3.5" />
-                    MapLibre
-                  </button>
-                  <button
-                    onClick={() => setMapProvider('google')}
-                    className={`flex items-center gap-1.5 rounded-r-xl px-3 py-2 text-xs font-medium transition-all ${
-                      mapProvider === 'google'
-                        ? 'bg-saffron-500 text-white'
-                        : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
-                    }`}
-                  >
-                    <Map className="h-3.5 w-3.5" />
-                    Google
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <div className="flex-1 flex justify-end">
-              <div className="w-[340px] shrink-0 rounded-2xl border border-slate-200/80 bg-white/90 shadow-lg backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90 overflow-hidden h-fit max-h-[calc(100vh-10rem)]">
-                <ExploreSidebar
-                  selectedDistrict={selectedDistrict}
-                  activeCategory={activeCategory}
-                  onCategorySelect={setActiveCategory}
-                />
-              </div>
-            </div>
+      {hasGoogleKey && (
+        <div className="pointer-events-none absolute right-4 top-4 z-10">
+          <div className="pointer-events-auto flex rounded-xl border border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90">
+            <button
+              onClick={() => setMapProvider('maplibre')}
+              className={`flex items-center gap-1.5 rounded-l-xl px-3 py-2 text-xs font-medium transition-all ${
+                mapProvider === 'maplibre'
+                  ? 'bg-saffron-500 text-white'
+                  : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
+              }`}
+            >
+              <Globe className="h-3.5 w-3.5" />
+              MapLibre
+            </button>
+            <button
+              onClick={() => setMapProvider('google')}
+              className={`flex items-center gap-1.5 rounded-r-xl px-3 py-2 text-xs font-medium transition-all ${
+                mapProvider === 'google'
+                  ? 'bg-saffron-500 text-white'
+                  : 'text-slate-500 hover:bg-slate-50 dark:text-sand-400 dark:hover:bg-obsidian-800'
+              }`}
+            >
+              <Map className="h-3.5 w-3.5" />
+              Google
+            </button>
           </div>
+        </div>
+      )}
+
+      <div className="pointer-events-none absolute bottom-4 right-4 top-4 z-10">
+        <div className="pointer-events-auto h-full w-[340px] rounded-2xl border border-slate-200/80 bg-white/90 shadow-lg backdrop-blur-xl dark:border-obsidian-700/80 dark:bg-obsidian-950/90 overflow-hidden">
+          <ExploreSidebar
+            selectedDistrict={selectedDistrict}
+            activeCategory={activeCategory}
+            onCategorySelect={setActiveCategory}
+          />
         </div>
       </div>
     </div>

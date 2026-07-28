@@ -74,6 +74,7 @@ export function GoogleMapView({
   const mapRef = useRef<google.maps.Map | null>(null)
   const polygonsRef = useRef<Map<string, google.maps.Polygon>>(new Map())
   const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([])
+  const infoWindowRef = useRef<google.maps.InfoWindow | null>(null)
   const prevDistrictRef = useRef<string | null | undefined>(null)
   const { theme } = useTheme()
 
@@ -120,7 +121,38 @@ export function GoogleMapView({
       })
 
       marker.addListener('click', () => {
-        onMarkerClick?.(loc.slug)
+        if (infoWindowRef.current) infoWindowRef.current.close()
+
+        infoWindowRef.current = new google.maps.InfoWindow({
+          content: `<div style="font-family:Inter,system-ui,sans-serif;max-width:240px;padding:4px 2px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="font-size:20px">${emoji}</span>
+              <div>
+                <div style="font-weight:600;font-size:14px;color:#111">${loc.title}</div>
+                <div style="font-size:11px;color:#888;text-transform:capitalize">${loc.category.replace(/-/g, ' ')}</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:#555;line-height:1.5;margin:0 0 8px 0">${loc.description.slice(0, 120)}...</p>
+            <div style="display:flex;gap:6px">
+              <a id="gm-detail-${loc.slug}" href="#" style="display:inline-block;padding:5px 12px;background:#f59e0b;color:#fff;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">View details →</a>
+              <a href="https://www.openstreetmap.org/directions?to=${loc.coordinates.lat}%2C${loc.coordinates.lng}#map=14/${loc.coordinates.lat}/${loc.coordinates.lng}" target="_blank" style="display:inline-block;padding:5px 12px;border:1px solid #ddd;color:#555;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none">Directions</a>
+            </div>
+          </div>`,
+          position: { lat: loc.coordinates.lat, lng: loc.coordinates.lng },
+        })
+
+        infoWindowRef.current.open({ map: mapRef.current })
+
+        google.maps.event.addListenerOnce(infoWindowRef.current, 'domready', () => {
+          const detailLink = document.getElementById(`gm-detail-${loc.slug}`)
+          if (detailLink) {
+            detailLink.addEventListener('click', e => {
+              e.preventDefault()
+              infoWindowRef.current?.close()
+              onMarkerClick?.(loc.slug)
+            })
+          }
+        })
       })
 
       markersRef.current.push(marker)
@@ -140,6 +172,7 @@ export function GoogleMapView({
       mapId,
       disableDefaultUI: true,
       zoomControl: true,
+      scrollwheel: true,
       mapTypeControl: false,
       streetViewControl: false,
       fullscreenControl: false,
