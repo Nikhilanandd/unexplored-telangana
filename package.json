@@ -19,7 +19,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "prepare": "husky",
-    "clean": "bun run --filter '*' clean"
+    "clean": "bun run --filter '*' clean",
+    "validate:data": "bun run scripts/validate-data.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

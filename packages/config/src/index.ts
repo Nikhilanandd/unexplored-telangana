@@ -41,7 +41,6 @@ export const DISTRICTS = [
     description:
       'The northern gateway of Telangana, known for its cascading waterfalls, dense forests, and tribal heritage.',
     knownFor: ['waterfalls', 'tribal-culture', 'forests'],
-    locationCount: 28,
   },
   {
     name: 'Bhadradri Kothagudem',
@@ -51,7 +50,6 @@ export const DISTRICTS = [
     description:
       'Home to the sacred Sri Sita Ramachandra Swamy Temple on the banks of Godavari and rich coal mining heritage.',
     knownFor: ['temples', 'rivers', 'coal-mining'],
-    locationCount: 32,
   },
   {
     name: 'Hyderabad',
@@ -61,7 +59,6 @@ export const DISTRICTS = [
     description:
       'The City of Pearls — a seamless blend of 400-year-old heritage with a thriving modern tech ecosystem.',
     knownFor: ['food', 'forts', 'museums'],
-    locationCount: 56,
   },
   {
     name: 'Jagtial',
@@ -71,7 +68,6 @@ export const DISTRICTS = [
     description:
       "A district rich in ancient temples and step wells, nestled along the Godavari's tributaries.",
     knownFor: ['temples', 'forts'],
-    locationCount: 18,
   },
   {
     name: 'Jangaon',
@@ -81,7 +77,6 @@ export const DISTRICTS = [
     description:
       "A cradle of Telangana's armed struggle history, dotted with prehistoric sites and ancient temples.",
     knownFor: ['historical', 'temples'],
-    locationCount: 16,
   },
   {
     name: 'Jayashankar Bhupalpally',
@@ -91,7 +86,6 @@ export const DISTRICTS = [
     description:
       'Tribal heartland with ancient temples, the stunning Pandavula Gutta cave paintings, and dense forests.',
     knownFor: ['temples', 'forests', 'archaeological'],
-    locationCount: 22,
   },
   {
     name: 'Jogulamba Gadwal',
@@ -101,7 +95,6 @@ export const DISTRICTS = [
     description:
       'Sacred land housing the Jogulamba Shakti Peetham, ancient river forts, and traditional Gadwal silk weaving.',
     knownFor: ['temples', 'forts', 'handlooms'],
-    locationCount: 20,
   },
   {
     name: 'Kamareddy',
@@ -111,7 +104,6 @@ export const DISTRICTS = [
     description:
       'Gateway to the Pocharam wildlife sanctuary and home to the historic Domakonda Fort.',
     knownFor: ['forts', 'wildlife', 'lakes'],
-    locationCount: 22,
   },
   {
     name: 'Karimnagar',
@@ -121,7 +113,6 @@ export const DISTRICTS = [
     description:
       'The Granary of Telangana featuring the majestic Lower Manair Dam, ancient temples, and silver filigree craft.',
     knownFor: ['reservoirs', 'temples', 'forts'],
-    locationCount: 28,
   },
   {
     name: 'Khammam',
@@ -131,7 +122,6 @@ export const DISTRICTS = [
     description:
       'A historic district with the iconic Khammam Fort, Lakaram Lake, and the ancient Narasimha Swamy temple.',
     knownFor: ['forts', 'lakes', 'temples'],
-    locationCount: 26,
   },
   {
     name: 'Komaram Bheem Asifabad',
@@ -141,7 +131,6 @@ export const DISTRICTS = [
     description:
       'Named after the tribal legend Komaram Bheem — land of dense forests, gushing waterfalls, and coal mines.',
     knownFor: ['waterfalls', 'forests', 'tribal-culture'],
-    locationCount: 24,
   },
   {
     name: 'Mahabubabad',
@@ -151,7 +140,6 @@ export const DISTRICTS = [
     description:
       'Known for the ancient Bayyaram cheruvu and prehistoric Palamakula rock paintings.',
     knownFor: ['archaeological', 'temples', 'lakes'],
-    locationCount: 18,
   },
   {
     name: 'Mahabubnagar',
@@ -161,7 +149,6 @@ export const DISTRICTS = [
     description:
       'The southern district of Telangana, home to the famous Pillalamarri banyan tree, Koilkonda Fort, and the Jurala Dam.',
     knownFor: ['forts', 'reservoirs', 'eco-tourism'],
-    locationCount: 28,
   },
   {
     name: 'Mancherial',
@@ -171,7 +158,6 @@ export const DISTRICTS = [
     description:
       'An industrial heartland by the Godavari, yet hiding several pristine waterfalls and dense teak forests.',
     knownFor: ['waterfalls', 'forests', 'temples'],
-    locationCount: 20,
   },
   {
     name: 'Medak',
@@ -181,7 +167,6 @@ export const DISTRICTS = [
     description:
       'Known for its majestic Gothic-style Medak Cathedral, the historic Medak Fort, and the Pocharam Wildlife Sanctuary.',
     knownFor: ['churches', 'forts', 'wildlife'],
-    locationCount: 22,
   },
   {
     name: 'Medchal-Malkajgiri',
@@ -191,7 +176,6 @@ export const DISTRICTS = [
     description:
       'The northern corridor of Hyderabad, featuring the Shamirpet Lake, various gardens, and emerging tech parks.',
     knownFor: ['lakes', 'eco-tourism', 'viewpoints'],
-    locationCount: 18,
   },
   {
     name: 'Mulugu',
@@ -201,7 +185,6 @@ export const DISTRICTS = [
     description:
       'A district of ancient spirituality and nature — home to the world-famous Ramappa and Thousand Pillar temples.',
     knownFor: ['temples', 'lakes', 'waterfalls'],
-    locationCount: 24,
   },
   {
     name: 'Nagarkurnool',
@@ -211,7 +194,6 @@ export const DISTRICTS = [
     description:
       'The gateway to the Nallamala forests, featuring the Srisailam Tiger Reserve, ancient temples, and deep caves.',
     knownFor: ['wildlife', 'temples', 'eco-tourism'],
-    locationCount: 24,
   },
   {
     name: 'Nalgonda',
@@ -221,7 +203,6 @@ export const DISTRICTS = [
     description:
       'Famous for the Nagarjuna Sagar dam, ancient Buddhist sites, and the historic Devarakonda Fort.',
     knownFor: ['reservoirs', 'forts', 'archaeological'],
-    locationCount: 28,
   },
   {
     name: 'Narayanpet',
@@ -231,7 +212,6 @@ export const DISTRICTS = [
     description:
       'A cultural gem known for its world-famous Narayanpet silk sarees, ancient temples, and serene rural landscapes.',
     knownFor: ['handlooms', 'temples', 'forts'],
-    locationCount: 16,
   },
   {
     name: 'Nirmal',
@@ -241,7 +221,6 @@ export const DISTRICTS = [
     description:
       "Renowned for the Nirmal paintings and wooden toys, dense teak forests, and the Sahyadri ranges' waterfalls.",
     knownFor: ['waterfalls', 'handicrafts', 'forts'],
-    locationCount: 22,
   },
   {
     name: 'Nizamabad',
@@ -251,7 +230,6 @@ export const DISTRICTS = [
     description:
       'Known for the historic Nizamabad Fort, the serene Alisagar Reservoir, and the ancient Dichpally Ramalayam.',
     knownFor: ['forts', 'lakes', 'temples'],
-    locationCount: 24,
   },
   {
     name: 'Peddapalli',
@@ -261,7 +239,6 @@ export const DISTRICTS = [
     description:
       'Industrial district with a rich heritage — home to the ancient Bheemaram caves and Manthani temples.',
     knownFor: ['temples', 'archaeological', 'reservoirs'],
-    locationCount: 18,
   },
   {
     name: 'Rajanna Sircilla',
@@ -271,7 +248,6 @@ export const DISTRICTS = [
     description:
       'The Textile Town of Telangana, with rich handloom weaving tradition, the beautiful Mid Manair Dam, and ancient temples.',
     knownFor: ['handlooms', 'reservoirs', 'temples'],
-    locationCount: 20,
   },
   {
     name: 'Rangareddy',
@@ -281,7 +257,6 @@ export const DISTRICTS = [
     description:
       'Circling Hyderabad, this district features the stunning Ananthagiri Hills, Himayat Sagar, and various adventure spots.',
     knownFor: ['viewpoints', 'lakes', 'eco-tourism'],
-    locationCount: 32,
   },
   {
     name: 'Sangareddy',
@@ -291,7 +266,6 @@ export const DISTRICTS = [
     description:
       'Features the spiritual heart of Sangareddy — the Jogipet Temple, Manjeera Wildlife Sanctuary, and Singur Dam.',
     knownFor: ['temples', 'wildlife', 'reservoirs'],
-    locationCount: 22,
   },
   {
     name: 'Siddipet',
@@ -301,7 +275,6 @@ export const DISTRICTS = [
     description:
       'A rapidly developing district known for the historic Ranganayaka Swamy Temple and the beautiful Konda Pochamma Sagar.',
     knownFor: ['temples', 'reservoirs', 'forts'],
-    locationCount: 20,
   },
   {
     name: 'Suryapet',
@@ -311,7 +284,6 @@ export const DISTRICTS = [
     description:
       'Known for the Phanigiri Buddhist archaeological site, the historic Pillalamarri era, and beautiful irrigation tanks.',
     knownFor: ['archaeological', 'temples', 'reservoirs'],
-    locationCount: 18,
   },
   {
     name: 'Vikarabad',
@@ -321,7 +293,6 @@ export const DISTRICTS = [
     description:
       "The nature-lover's escape — featuring the Ananthagiri Hills, forest treks, ancient temples, and rich biodiversity.",
     knownFor: ['viewpoints', 'forests', 'eco-tourism'],
-    locationCount: 24,
   },
   {
     name: 'Wanaparthy',
@@ -331,7 +302,6 @@ export const DISTRICTS = [
     description:
       'The Rani of Telangana — ruled by the iconic Raja Rameshwar Rao, home to the grand Wanaparthy Palace and ancient forts.',
     knownFor: ['forts', 'temples', 'reservoirs'],
-    locationCount: 20,
   },
   {
     name: 'Warangal',
@@ -341,7 +311,6 @@ export const DISTRICTS = [
     description:
       'The ancient Kakatiya capital — home to the UNESCO-listed Ramappa Temple, Thousand Pillar Temple, and Warangal Fort ruins.',
     knownFor: ['forts', 'temples', 'lakes'],
-    locationCount: 32,
   },
   {
     name: 'Yadadri Bhuvanagiri',
@@ -351,6 +320,5 @@ export const DISTRICTS = [
     description:
       'Home to the sacred Yadadri Lakshmi Narasimha Swamy temple and the majestic Bhongir Fort atop a monolithic rock.',
     knownFor: ['temples', 'forts', 'viewpoints'],
-    locationCount: 22,
   },
 ] as const

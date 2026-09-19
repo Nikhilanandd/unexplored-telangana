@@ -1,11 +1,11 @@
 import { useNavigate } from '@tanstack/react-router'
 import type { Category } from '@ut/types'
+import { Globe, Map } from 'lucide-react'
 import { useState } from 'react'
 import { DistrictSelector } from '../components/DistrictSelector'
 import { ExploreSidebar } from '../components/ExploreSidebar'
 import { GoogleMapView } from '../components/GoogleMapView'
 import { MapView } from '../components/MapView'
-import { Map, Globe } from 'lucide-react'
 
 type MapProvider = 'maplibre' | 'google'
 

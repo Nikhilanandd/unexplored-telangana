@@ -46,6 +46,16 @@ export interface LocationFrontmatter {
   nearbyAttractions: string[]
   images: string[]
   osmLink: string
+  /** Entry fee description, e.g. "Free", "₹25 per person", "₹50 for foreigners" */
+  entryFee?: string
+  /** Opening hours, e.g. "6:00 AM – 6:00 PM", "Sunrise to sunset" */
+  openingHours?: string
+  /** Available facilities like parking, restrooms, food stalls */
+  facilities?: string[]
+  /** How to reach by various transport modes */
+  howToReach?: string
+  /** Wikimedia Commons image URL */
+  image?: string
 }
 
 export interface Location extends LocationFrontmatter {
@@ -60,7 +70,6 @@ export interface District {
   zoom: number
   description: string
   knownFor: string[]
-  locationCount: number
   boundingBox?: [number, number, number, number]
 }
 
